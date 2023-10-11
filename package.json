@@ -1,0 +1,21 @@
+{
+  "name": "erc-4337-samples",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^3.0.0",
+    "hardhat": "^2.18.0"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.9.3",
+    "@uniswap/v3-periphery": "^1.4.4",
+    "dotenv": "^16.3.1",
+    "solc": "^0.8.21"
+  },
+  "scripts": {
+    "compile": "hardhat compile",
+    "deploy": "hardhat run scripts/deploy.js --network local",
+    "deploy-in-net": "hardhat run scripts/deploy.js --network",
+    "test-network": "npx hardhat node",
+    "create-wallet-contract": "node scripts/createWallet.js",
+    "execute-callData": "node scripts/executeCallData.js"
+  }
+}

@@ -397,8 +397,12 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
-# Contracts
-./contracts
-./build
-build/
-contracts/
+# Hardhat folders
+cache
+artifacts
+
+# Deployment files
+deployData.json
+
+# Config file
+testData.json
