@@ -16,6 +16,8 @@
     "deploy-in-net": "hardhat run scripts/deploy.js --network",
     "test-network": "npx hardhat node",
     "create-wallet-contract": "node scripts/createWallet.js",
-    "execute-callData": "node scripts/executeCallData.js"
+    "execute-callData": "node scripts/executeCallData.js",
+    "create-wallet-contract-paymaster": "node scripts/createWalletViaPaymaster.js",
+    "execute-callData-paymaster": "node scripts/executeCallDataViaPaymaster.js"
   }
 }

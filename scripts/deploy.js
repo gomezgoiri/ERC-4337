@@ -14,7 +14,7 @@ async function main() {
 
   const verifyingPaymaster = await ethers.deployContract("VerifyingPaymaster", [
     entryPointAddress,
-    testData.alicePublicKey
+    testData.coordinatorPublicKey
   ])
   const depositPaymaster = await ethers.deployContract("DepositPaymaster", [
     entryPointAddress

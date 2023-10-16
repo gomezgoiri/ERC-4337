@@ -47,3 +47,4 @@ npm run deploy
 
 - [Create wallet contract](https://medium.com/cumberlandlabs/building-account-abstraction-erc-4337-part-1-create-wallet-contract-initcode-82024f9c0ec1): `npm run create-wallet-contract`
 - [Execute callData](https://medium.com/cumberlandlabs/building-account-abstraction-erc-4337-part-2-execute-calldata-8a22a470a5ac): `npm run execute-callData`
+- [Execute callData via paymaster](https://medium.com/cumberlandlabs/building-account-abstraction-erc-4337-part-3-paymaster-39405f6e06ef): `npm run execute-callData-paymaster` and `npm run create-wallet-contract-paymaster`

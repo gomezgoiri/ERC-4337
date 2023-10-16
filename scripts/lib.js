@@ -30,6 +30,9 @@ const testData = require("../testData.json")
 const CHAIN_ID = 1337
 const salt = 0 // Date.now()
 
+const MOCK_VALID_UNTIL = "0x00000000deadbeef"
+const MOCK_VALID_AFTER = "0x0000000000001234"
+
 async function initAddresses() {
   const { alicePublicKey } = testData
 
@@ -115,7 +118,7 @@ async function fundContractsAndAddresses(
   await tx.wait()
 }
 
-async function composePaymasterAndData(ops) {
+async function composePaymasterAndData(ops, coordinatorPrivateKey) {
   ops.paymasterAndData = concat([
     verifyingPaymasterAddress,
     AbiCoder.defaultAbiCoder().encode(
@@ -130,8 +133,8 @@ async function composePaymasterAndData(ops) {
     MOCK_VALID_UNTIL,
     MOCK_VALID_AFTER
   )
-  const signer = new ethers.Wallet(coordinatorPrivateKey, provider)
-  const sign = await signer.signMessage(ethers.getBytes(hash))
+  const signer = new Wallet(coordinatorPrivateKey, provider)
+  const sign = await signer.signMessage(getBytes(hash))
   const paymasterAndData = concat([
     verifyingPaymasterAddress,
     AbiCoder.defaultAbiCoder().encode(
@@ -193,7 +196,8 @@ async function createUserOp(
     paymasterAndData = "0x"
   },
   signer,
-  viaPaymaster = false
+  viaPaymaster = false,
+  coordinatorPrivateKey
 ) {
   const userOp = {
     sender,
@@ -210,7 +214,10 @@ async function createUserOp(
   }
 
   if (viaPaymaster) {
-    userOp.paymasterAndData = await composePaymasterAndData(userOp)
+    userOp.paymasterAndData = await composePaymasterAndData(
+      userOp,
+      coordinatorPrivateKey
+    )
   }
 
   userOp.signature = await signUserOp(userOp, signer)
@@ -243,7 +250,8 @@ async function executeHandleOps(
   const userOp = await createUserOp(
     { sender: walletAddress, initCode, callData },
     userOpSigner,
-    viaPaymaster
+    viaPaymaster,
+    coordinatorPrivateKey
   )
 
   const handleOpsRawData = entryPoint.iface.encodeFunctionData("handleOps", [
@@ -281,7 +289,7 @@ async function getBalances(walletAddress) {
   await getUserBalance("Alice sender wallet", walletAddress)
   await getUserBalance("Bob", testData.bobPublicKey)
   console.groupEnd("Balances:")
-  console.log("\n\n")
+  console.log("\n")
 
   /*console.log(
     `Bob DAI Balance ${formatEther(await daiContract.balanceOf(bobPublicKey))}`
